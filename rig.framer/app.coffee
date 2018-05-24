@@ -16,8 +16,24 @@ place = () ->
 		height: Screen.height - (gutter*2)
 		x: gutter
 		y: gutter
-	
-place()
 
+	ball.x = (boundary.width/2)- (ball.width / 2)
+	
+# 	setup states inside closure so it updates on resize
+	ball.states = 
+		show:
+			midY : boundary.height/2
+		dismiss:
+			midY : boundary.height
+
+place()
 Canvas.onResize ->
 	place()
+	
+# animate
+Utils.interval 0.5, ->
+	ball.stateCycle("show","dismiss")
+	
+ball.animationOptions = 
+	curve: Bezier.linear
+	time: 0
