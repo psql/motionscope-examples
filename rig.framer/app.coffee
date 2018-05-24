@@ -1,4 +1,10 @@
 # setup elements
+gutter = 25
+
+scopeContainer = new Layer
+	size: 100
+	backgroundColor: "red"
+
 ball = new Layer
 	parent: boundary
 	width: 100
@@ -9,14 +15,20 @@ ball = new Layer
 
 # responsive stuff		
 place = () ->
-	gutter = 25
 	
 	boundary.props = 
 		width: (Screen.width / 2) - (gutter*2)
 		height: Screen.height - (gutter*2)
 		x: gutter
 		y: gutter
-
+		
+	scopeContainer.props = 
+		width: (Screen.width / 2) - (gutter)
+		height: Screen.height - (gutter*2)
+		x: boundary.width + (gutter * 2)
+		y: gutter
+	
+	
 	ball.x = (boundary.width/2)- (ball.width / 2)
 	
 # 	setup states inside closure so it updates on resize
@@ -37,3 +49,9 @@ Utils.interval 0.5, ->
 ball.animationOptions = 
 	curve: Bezier.linear
 	time: 0
+
+
+(require "MotionScope").load((scope) ->
+  parent: scopeContainer
+  scope.plot(ball, 'y')
+)
