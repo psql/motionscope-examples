@@ -1,3 +1,4 @@
+Canvas.backgroundColor = "black"
 # setup elements
 gutter = 25
 
@@ -11,6 +12,16 @@ ball = new Layer
 	height: 100
 	borderRadius: 1000
 	backgroundColor: "rgba(255,131,215,1)"
+
+label = new TextLayer
+	x: 15
+	y: 15
+	text: "Stepped Position"
+	textAlign: "center"
+	fontFamily: "Menlo, monospaced"
+	color: "white"
+	fontSize: 16
+	parent: boundary
 	
 
 # responsive stuff		

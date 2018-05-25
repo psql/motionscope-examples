@@ -1,3 +1,4 @@
+Canvas.backgroundColor = "black"
 # setup elements
 gutter = 25
 
@@ -11,6 +12,16 @@ ball = new Layer
 	height: 100
 	borderRadius: 1000
 	backgroundColor: "rgba(255,131,215,1)"
+
+label = new TextLayer
+	x: 15
+	y: 15
+	text: "Ease In Out"
+	textAlign: "center"
+	fontFamily: "Menlo, monospaced"
+	color: "white"
+	fontSize: 16
+	parent: boundary
 	
 
 # responsive stuff		
@@ -43,12 +54,13 @@ Canvas.onResize ->
 	place()
 	
 # animate
-Utils.interval 0.5, ->
+ball.stateSwitch("dismiss")
+Utils.interval 1.5, ->
 	ball.stateCycle("show","dismiss")
 	
 ball.animationOptions = 
-	curve: Bezier.linear
-	time: 0
+	curve: Bezier.easeInOut
+	time: 1
 
 
 (require "MotionScope").load({

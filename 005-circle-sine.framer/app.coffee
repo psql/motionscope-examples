@@ -1,3 +1,4 @@
+Canvas.backgroundColor = "black"
 # setup elements
 gutter = 25
 
@@ -11,6 +12,16 @@ ball = new Layer
 	height: 100
 	borderRadius: 1000
 	backgroundColor: "rgba(255,131,215,1)"
+
+label = new TextLayer
+	x: 15
+	y: 15
+	text: "Sine vs Consine"
+	textAlign: "center"
+	fontFamily: "Menlo, monospaced"
+	color: "white"
+	fontSize: 16
+	parent: boundary
 	
 
 # responsive stuff		
@@ -38,21 +49,33 @@ place = () ->
 		dismiss:
 			midY : boundary.height
 
+
+
+counter = 0
+
+Utils.interval 0.001, ->
+	counter++
+	
+	# y = A sin(Bx + C) + D
+	# amplitude is A
+	# period is 2π/B
+	# phase shift is −C/B
+	# vertical shift is D
+	
+	ball.x = 150 * Math.sin(Math.PI / 200 * counter) + 200
+	ball.y = 150 * Math.cos(Math.PI / 200 * counter) + 200
+
 place()
 Canvas.onResize ->
 	place()
 	
 # animate
-Utils.interval 0.5, ->
-	ball.stateCycle("show","dismiss")
-	
-ball.animationOptions = 
-	curve: Bezier.linear
-	time: 0
-
 
 (require "MotionScope").load({
   parent: scopeContainer
 }, (scope) ->
-  scope.plot(ball, 'y')
+  scope.plot(ball, 'y',{
+    color: '#ffdc6d'
+  })
+  scope.plot(ball, 'x',{color:'#ff5fff'})
 )
