@@ -52,7 +52,8 @@ place = () ->
 place()
 Canvas.onResize ->
 	place()
-	
+
+ball.stateSwitch("dismiss")
 # animate
 Utils.interval 0.5, ->
 	ball.stateCycle("show","dismiss")

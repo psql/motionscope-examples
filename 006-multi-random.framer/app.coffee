@@ -10,13 +10,13 @@ ball = new Layer
 	parent: boundary
 	width: 100
 	height: 100
-	borderRadius: 1000
+	borderRadius: 10
 	backgroundColor: "rgba(255,131,215,1)"
 
 label = new TextLayer
 	x: 15
 	y: 15
-	text: "Custom Bezier Curve"
+	text: "Layered Animation"
 	textAlign: "center"
 	fontFamily: "Menlo, monospaced"
 	color: "white"
@@ -55,16 +55,31 @@ Canvas.onResize ->
 	
 # animate
 ball.stateSwitch("dismiss")
-Utils.interval 1.5, ->
-	ball.stateCycle("show","dismiss")
+
+Utils.interval Utils.randomNumber(0.5,3), ->
+	ball.animate
+		properties:
+			x: Utils.randomNumber(0,(boundary.width - ball.width))
+			
+Utils.interval Utils.randomNumber(0.5,3), ->
+	ball.animate
+		properties:
+			y: Utils.randomNumber(0,(boundary.height - ball.width))	
+
+Utils.interval Utils.randomNumber(1,3), ->
+	ball.animate
+		properties:
+			rotation: Utils.randomNumber(-360,360)
+		time: 3
 	
 ball.animationOptions = 
-	curve: Bezier(.25,.01,.14,1.01)
-	time: 1
+	curve: Spring(damping: 0.8, mass: 10)
 
 
 (require "MotionScope").load({
   parent: scopeContainer
 }, (scope) ->
-  scope.plot(ball, 'y')
+  scope.plot(ball, 'y', {color: "yellow"})
+  scope.plot(ball, 'x', {color:"#fb5a75"})
+  scope.plot(ball, 'rotation', {color:"#6dd9ff"})
 )

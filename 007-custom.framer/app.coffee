@@ -16,7 +16,7 @@ ball = new Layer
 label = new TextLayer
 	x: 15
 	y: 15
-	text: "Custom Bezier Curve"
+	text: "Custom Cubic Bezier Curve"
 	textAlign: "center"
 	fontFamily: "Menlo, monospaced"
 	color: "white"
